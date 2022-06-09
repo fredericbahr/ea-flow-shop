@@ -1,3 +1,4 @@
+import { Individual } from './index';
 import { processingTimes } from './data';
 
 /**
@@ -30,4 +31,10 @@ export const calculateProcessingTimeForOperation = (
 
     return latestProcessingTime + processingTimeForJob;
   }
+};
+
+export const prettyPrintIndividual = (individual: Individual) => {
+  console.log(`genotyp: ${individual.genotyp}
+fitness: ${individual.fitness}
+makespan: ${1 / (individual.fitness || Infinity)}`);
 };

@@ -1,13 +1,17 @@
-import { shuffle } from 'lodash';
-import { calculateProcessingTimeForOperation } from './utils';
+import { cloneDeep, random, shuffle } from 'lodash';
+import {
+  calculateProcessingTimeForOperation,
+  prettyPrintIndividual,
+} from './utils';
 
-interface Individual {
+export interface Individual {
   genotyp: number[];
   fitness: number | undefined;
 }
 
-const jobAmount = 13;
-const operationAmount = 4;
+const jobAmount = 20;
+const operationAmount = 5;
+const maximumIteration = 300000;
 
 /**
  * Rates a genotype with a fitness
@@ -17,13 +21,15 @@ const operationAmount = 4;
  * @returns the fitness of an individual
  */
 const ratingFunction = (genotyp: number[]): number => {
+  const copiedGenotyp = [...genotyp];
+
   const counters = Array(jobAmount).fill(0);
   const maschinesPlan = Array.from(Array(operationAmount), () =>
     new Array(jobAmount).fill(0)
   );
 
-  while (genotyp.length !== 0) {
-    const gene: number | undefined = genotyp.shift();
+  while (copiedGenotyp.length !== 0) {
+    const gene: number | undefined = copiedGenotyp.shift();
 
     if (!gene) break;
 
@@ -43,14 +49,30 @@ const ratingFunction = (genotyp: number[]): number => {
   return 1 / makespan;
 };
 
-const shiftMutation = (
-  a: Individual,
-  b: Individual
-): [Individual, Individual] => {
-  return [
-    { genotyp: [], fitness: undefined },
-    { genotyp: [], fitness: undefined },
-  ];
+/**
+ * Mutates the individual through shifting a random proportion of
+ *
+ * @returns a new mutated individual
+ */
+const shiftMutation = (a: Individual): Individual => {
+  const newIndividual: Individual = cloneDeep(a);
+
+  const leftIndex = random(1, a.genotyp.length - 1);
+  const rightIndex = random(1, a.genotyp.length - 1);
+
+  newIndividual.genotyp[rightIndex] = a.genotyp[leftIndex];
+
+  if (leftIndex > rightIndex) {
+    for (let j = rightIndex; j < leftIndex; j++) {
+      newIndividual.genotyp[j + 1] = a.genotyp[j];
+    }
+  } else {
+    for (let j = leftIndex + 1; j <= rightIndex; j++) {
+      newIndividual.genotyp[j - 1] = a.genotyp[j];
+    }
+  }
+
+  return newIndividual;
 };
 
 const orderRecombination = (a: Individual, b: Individual): Individual => {
@@ -85,6 +107,7 @@ const generateSolutionIndividual = (
 ): Individual => {
   const sortedGenotyp = getSortedGenotyp(jobAmount, operationAmount);
   const genotyp = shuffle(sortedGenotyp);
+
   return {
     genotyp,
     fitness: undefined,
@@ -110,11 +133,33 @@ const getSortedGenotyp = (
   return sortedGenotyp;
 };
 
-const hillclimber = () => {
-  const count = 0;
-  const [solutionIdividual] = generateSolutionIndividuals(1);
-  const rating = ratingFunction(solutionIdividual.genotyp);
-  console.log('rating:', rating);
+/**
+ * hillclimber
+ * Generates maximumIteration´s times individuals and compares each
+ * Saves the best
+ *
+ * @returns the best found individual
+ */
+const hillclimber = (): Individual => {
+  let count = 0;
+
+  let [bestIndividual] = generateSolutionIndividuals(1);
+
+  bestIndividual.fitness = ratingFunction(bestIndividual.genotyp);
+
+  while (count < maximumIteration) {
+    count++;
+    const mutatedIndividual = shiftMutation(bestIndividual);
+    mutatedIndividual.fitness = ratingFunction(mutatedIndividual.genotyp);
+
+    if (mutatedIndividual.fitness >= (bestIndividual.fitness || 0)) {
+      bestIndividual = mutatedIndividual;
+    }
+  }
+
+  return bestIndividual;
 };
 
-hillclimber();
+const bestIndividual = hillclimber();
+
+prettyPrintIndividual(bestIndividual);
