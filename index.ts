@@ -1,4 +1,5 @@
 import { shuffle } from 'lodash';
+import { calculateProcessingTimeForOperation } from './utils';
 
 interface Individual {
   genotyp: number[];
@@ -6,10 +7,35 @@ interface Individual {
 }
 
 const jobAmount = 3;
-const operationAmount = 4;
+const operationAmount = 3;
 
-const ratingFunction = (genotyp: string): number => {
-  return 0;
+const ratingFunction = (genotyp: number[]): number => {
+  const counters = Array(jobAmount).fill(0);
+  const maschinesPlan = Array.from(Array(operationAmount), () =>
+    new Array(jobAmount).fill(0)
+  );
+
+  while (genotyp.length !== 0) {
+    const gene: number | undefined = genotyp.shift();
+
+    if (!gene) break;
+
+    const index = gene - 1;
+
+    maschinesPlan[counters[index]][index] = calculateProcessingTimeForOperation(
+      maschinesPlan,
+      counters,
+      index
+    );
+
+    counters[index]++;
+  }
+
+  console.log(maschinesPlan);
+
+  const makespan = Math.max(...maschinesPlan[maschinesPlan.length - 1]);
+
+  return makespan;
 };
 
 const shiftMutation = (
@@ -82,7 +108,8 @@ const getSortedGenotyp = (
 const hillclimber = () => {
   const count = 0;
   const [solutionIdividual] = generateSolutionIndividuals(1);
-  console.log(solutionIdividual.genotyp);
+  const rating = ratingFunction(solutionIdividual.genotyp);
+  console.log('rating:', rating);
 };
 
 hillclimber();
