@@ -6,9 +6,16 @@ interface Individual {
   fitness: number | undefined;
 }
 
-const jobAmount = 3;
-const operationAmount = 3;
+const jobAmount = 13;
+const operationAmount = 4;
 
+/**
+ * Rates a genotype with a fitness
+ * Calculates the makespan of a schedule
+ *
+ * @param genotyp the genotyp of an individual to rate
+ * @returns the fitness of an individual
+ */
 const ratingFunction = (genotyp: number[]): number => {
   const counters = Array(jobAmount).fill(0);
   const maschinesPlan = Array.from(Array(operationAmount), () =>
@@ -31,11 +38,9 @@ const ratingFunction = (genotyp: number[]): number => {
     counters[index]++;
   }
 
-  console.log(maschinesPlan);
-
   const makespan = Math.max(...maschinesPlan[maschinesPlan.length - 1]);
 
-  return makespan;
+  return 1 / makespan;
 };
 
 const shiftMutation = (
