@@ -13,6 +13,11 @@ const jobAmount = 20;
 const operationAmount = 5;
 const maximumIteration = 300000;
 
+const populationSize = 10;
+const recombinationProbability = 0.15;
+const mutationProbability = 0.85;
+const individualSelectionCount = 5;
+
 /**
  * Rates a genotype with a fitness
  * Calculates the makespan of a schedule
@@ -76,7 +81,43 @@ const shiftMutation = (a: Individual): Individual => {
 };
 
 const orderRecombination = (a: Individual, b: Individual): Individual => {
-  return { genotyp: [], fitness: 0 };
+  const newIndividual: Individual = { genotyp: [], fitness: undefined };
+
+  const crossoverEnd = random(1, a.genotyp.length - 1);
+
+  for (let index = 0; index <= crossoverEnd; index++) {
+    newIndividual.genotyp.push(a.genotyp[index]);
+  }
+
+  for (let index = crossoverEnd + 1; index < a.genotyp.length; index++) {
+    newIndividual.genotyp.push(b.genotyp[index]);
+  }
+
+  return newIndividual;
+};
+
+const selection = (population: Individual[]): Individual[] => {
+  const selectedPopulation: Individual[] = [];
+
+  for (let index = 0; index < individualSelectionCount; index++) {
+    let selection: Individual | undefined = undefined;
+    let j = 1;
+    let sum = population[j].fitness || -Infinity;
+
+    const randomNumber = random(0, 1);
+
+    while (sum < randomNumber) {
+      j++;
+      selection = population[j];
+      sum = sum + (population[j].fitness || -Infinity);
+    }
+
+    if (selection) {
+      selectedPopulation.push(selection);
+    }
+  }
+
+  return selectedPopulation;
 };
 
 /**
@@ -158,6 +199,21 @@ const hillclimber = (): Individual => {
   }
 
   return bestIndividual;
+};
+
+const ga = (): Individual => {
+  let count = 0;
+  let population: Individual[] = generateSolutionIndividuals(populationSize);
+  population = population.map((individual) => {
+    individual.fitness = ratingFunction(individual.genotyp);
+
+    return individual;
+  });
+
+  while (count < maximumIteration) {
+    const selectedPopulation = selection(population)
+    for (let index = )
+  }
 };
 
 const bestIndividual = hillclimber();
