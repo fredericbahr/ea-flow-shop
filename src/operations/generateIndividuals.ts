@@ -1,7 +1,6 @@
 import { shuffle } from 'lodash';
-import { jobAmount, operationAmount } from './constants';
-import { Individual } from './interface';
-
+import { jobAmount, operationAmount } from '../constants';
+import { Individual } from '../interface';
 /**
  * Generates solution individuals
  * @param {number} amount amount of solution individuals to generate

@@ -1,6 +1,6 @@
 import { cloneDeep, random } from 'lodash';
-import { mutationProbability } from './constants';
-import { Individual } from './interface';
+import { mutationProbability } from '../constants';
+import { Individual } from '../interface';
 
 /**
  * Handles the mutation of a population

@@ -1,6 +1,6 @@
-import { jobAmount, operationAmount } from './constants';
-import { processingTimes } from './data';
-import { Individual } from './interface';
+import { jobAmount, operationAmount } from '../constants';
+import { processingTimes } from '../data';
+import { Individual } from '../interface';
 
 /**
  * Handles the rating of a population

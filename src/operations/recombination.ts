@@ -1,6 +1,6 @@
 import { random } from 'lodash';
-import { childCreationCount } from './constants';
-import { Individual } from './interface';
+import { childCreationCount } from '../constants';
+import { Individual } from '../interface';
 
 /**
  * Handles the recombination of individuals of a populatioon

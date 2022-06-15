@@ -6,13 +6,13 @@ import {
   operationAmount,
   populationSize,
 } from './constants';
-import { generateSolutionIndividuals } from './generateIndividuals';
 import { Individual } from './interface';
-import { doMutation, shiftMutation } from './mutation';
-import { doRating, ratingFunction } from './rating';
-import { doRecombination } from './recombination';
-import { doRepairing, needsRepairing, repair } from './reparing';
-import { doSelection } from './selection';
+import { generateSolutionIndividuals } from './operations/generateIndividuals';
+import { doMutation, shiftMutation } from './operations/mutation';
+import { doRating, ratingFunction } from './operations/rating';
+import { doRecombination } from './operations/recombination';
+import { doRepairing } from './operations/reparing';
+import { doSelection } from './operations/selection';
 import { prettyPrintIndividual } from './utils';
 
 /**
@@ -78,6 +78,6 @@ const ga = (): Individual => {
   return getBestIndividual(population);
 };
 
-const bestIndividual = ga();
+const bestIndividual = hillclimber();
 
 prettyPrintIndividual(bestIndividual);

@@ -1,6 +1,6 @@
 import { random } from 'lodash';
-import { individualSelectionCount } from './constants';
-import { Individual } from './interface';
+import { individualSelectionCount } from '../constants';
+import { Individual } from '../interface';
 
 /**
  * Handles the selection of a population
