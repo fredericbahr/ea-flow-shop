@@ -98,6 +98,8 @@ const ga = (): Individual => {
       ...selectedIndividuals,
       ...repairedChildIndividuals,
     ]);
+
+    count++;
   }
 
   return getBestIndividual(population);
