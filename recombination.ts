@@ -10,8 +10,8 @@ import { Individual } from './interface';
 export const doRecombination = (population: Individual[]): Individual[] => {
   const children: Individual[] = [];
   for (let index = 0; index < childCreationCount; index++) {
-    const firstIndex = random(0, population.length);
-    const secondIndex = random(0, population.length);
+    const firstIndex = random(0, population.length - 1);
+    const secondIndex = random(0, population.length - 1);
 
     children.push(
       orderRecombination(population[firstIndex], population[secondIndex])

@@ -91,10 +91,10 @@ const getMissingJobOperation = (counter: number, job: number): number[] => {
  * @param {Individual} individual the individual to check whether it needs to be repaired
  * @return {boolean} true, if individual needs to be repaired
  */
-const needsRepairing = (individual: Individual): boolean => {
+export const needsRepairing = (individual: Individual): boolean => {
   const operationCounters = getOperationCountForJobs(individual);
 
-  return operationCounters.every((counter) => counter === operationAmount);
+  return !operationCounters.every((counter) => counter === operationAmount);
 };
 
 /**
@@ -104,7 +104,7 @@ const needsRepairing = (individual: Individual): boolean => {
  * @return {number[]} the operation counts for each job
  */
 const getOperationCountForJobs = (individual: Individual): number[] => {
-  const counters: number[] = Array(operationAmount).fill(0);
+  const counters: number[] = Array(jobAmount).fill(0);
 
   individual.genotyp.forEach((gene: number) => {
     const index = gene - 1;

@@ -10,7 +10,7 @@ import { generateSolutionIndividuals } from './generateIndividuals';
 import { Individual } from './interface';
 import { doRating, ratingFunction } from './rating';
 import { doRecombination } from './recombination';
-import { repair } from './reparing';
+import { doRepairing, needsRepairing, repair } from './reparing';
 import { doSelection } from './selection';
 import { prettyPrintIndividual } from './utils';
 
@@ -92,14 +92,17 @@ const ga = (): Individual => {
 
     const childIndividuals = doRecombination(population);
 
-    //const repairedChildIndividuals = doRepairing(childIndividuals);
+    const repairedChildIndividuals = doRepairing(childIndividuals);
 
-    population = doRating([...selectedIndividuals, ...childIndividuals]);
+    population = doRating([
+      ...selectedIndividuals,
+      ...repairedChildIndividuals,
+    ]);
   }
 
   return getBestIndividual(population);
 };
 
-const bestIndividual = hillclimber();
+const bestIndividual = ga();
 
 prettyPrintIndividual(bestIndividual);
