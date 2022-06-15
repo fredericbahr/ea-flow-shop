@@ -2,6 +2,13 @@ import { cloneDeep, random } from 'lodash';
 import { mutationProbability } from './constants';
 import { Individual } from './interface';
 
+/**
+ * Handles the mutation of a population
+ * Only mutates some individuals of the population
+ *
+ * @param {Individual[]} populaiton the population to mutate
+ * @returns {Individual[]} the population with mutated individuals
+ */
 export const doMutation = (population: Individual[]): Individual[] => {
   return population.map((individual: Individual) => {
     const randomNumber = random(0, 1);
