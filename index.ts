@@ -10,6 +10,7 @@ import { generateSolutionIndividuals } from './generateIndividuals';
 import { Individual } from './interface';
 import { doRating, ratingFunction } from './rating';
 import { doRecombination } from './recombination';
+import { repair } from './reparing';
 import { doSelection } from './selection';
 import { prettyPrintIndividual } from './utils';
 
