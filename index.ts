@@ -8,38 +8,12 @@ import {
 } from './constants';
 import { generateSolutionIndividuals } from './generateIndividuals';
 import { Individual } from './interface';
+import { doMutation, shiftMutation } from './mutation';
 import { doRating, ratingFunction } from './rating';
 import { doRecombination } from './recombination';
 import { doRepairing, needsRepairing, repair } from './reparing';
 import { doSelection } from './selection';
 import { prettyPrintIndividual } from './utils';
-
-/**
- * Mutates the individual through shifting a random proportion of
- *
- * @param {Individual} individual the individual to mutate
- * @returns a new mutated individual
- */
-const shiftMutation = (individual: Individual): Individual => {
-  const newIndividual: Individual = cloneDeep(individual);
-
-  const leftIndex = random(1, individual.genotyp.length - 1);
-  const rightIndex = random(1, individual.genotyp.length - 1);
-
-  newIndividual.genotyp[rightIndex] = individual.genotyp[leftIndex];
-
-  if (leftIndex > rightIndex) {
-    for (let j = rightIndex; j < leftIndex; j++) {
-      newIndividual.genotyp[j + 1] = individual.genotyp[j];
-    }
-  } else {
-    for (let j = leftIndex + 1; j <= rightIndex; j++) {
-      newIndividual.genotyp[j - 1] = individual.genotyp[j];
-    }
-  }
-
-  return newIndividual;
-};
 
 /**
  * Gets the best individual of the population based on the fitness
@@ -94,10 +68,9 @@ const ga = (): Individual => {
 
     const repairedChildIndividuals = doRepairing(childIndividuals);
 
-    population = doRating([
-      ...selectedIndividuals,
-      ...repairedChildIndividuals,
-    ]);
+    const mutatedChildIndividuals = doMutation(repairedChildIndividuals);
+
+    population = doRating([...selectedIndividuals, ...mutatedChildIndividuals]);
 
     count++;
   }
