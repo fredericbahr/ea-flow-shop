@@ -1,11 +1,4 @@
-import { cloneDeep, random, shuffle } from 'lodash';
-import {
-  childCreationCount,
-  jobAmount,
-  maximumIteration,
-  operationAmount,
-  populationSize,
-} from './constants';
+import { maximumIteration, populationSize } from './constants';
 import { Individual } from './interface';
 import { generateSolutionIndividuals } from './operations/generateIndividuals';
 import { doMutation, shiftMutation } from './operations/mutation';
@@ -78,6 +71,6 @@ const ga = (): Individual => {
   return getBestIndividual(population);
 };
 
-const bestIndividual = hillclimber();
+const bestIndividual = ga();
 
 prettyPrintIndividual(bestIndividual);
