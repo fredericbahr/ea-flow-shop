@@ -92,5 +92,5 @@ const ga = (): Individual => {
 
 const bestIndividual = ga();
 
-prettyPrintIndividual(bestIndividual);
 printPlot(bestIndividualsPerPopulation);
+prettyPrintIndividual(bestIndividual);
