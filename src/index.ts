@@ -1,12 +1,12 @@
-import { debug, maximumIteration, populationSize } from './constants';
-import { Individual } from './interface';
-import { generateSolutionIndividuals } from './operations/generateIndividuals';
-import { doMutation, shiftMutation } from './operations/mutation';
-import { doRating, ratingFunction } from './operations/rating';
-import { doRecombination } from './operations/recombination';
-import { doRepairing } from './operations/reparing';
-import { doSelection } from './operations/selection';
-import { prettyPrintIndividual, printPlot } from './utils';
+import { debug, maximumIteration, populationSize } from "./constants";
+import { Individual } from "./interface";
+import { generateSolutionIndividuals } from "./operations/generateIndividuals";
+import { doMutation, shiftMutation } from "./operations/mutation";
+import { doRating, ratingFunction } from "./operations/rating";
+import { doRecombination } from "./operations/recombination";
+import { doRepairing } from "./operations/reparing";
+import { doSelection } from "./operations/selection";
+import { prettyPrintIndividual, printPlot } from "./utils";
 
 const bestIndividualsPerPopulation: number[] = [];
 
@@ -26,10 +26,10 @@ const getBestIndividual = (population: Individual[]): Individual => {
 /**
  * Adds the fitness of the best individual to an array for plotting
  */
-const addBestIndividualToGraph = (population: Individual[]) => {
-  const best: Individual = getBestIndividual(population);
-
-  bestIndividualsPerPopulation.push(best.fitness ?? 0);
+const addBestIndividualToGraph = (best: Individual) => {
+  bestIndividualsPerPopulation.push(
+    best.fitness !== undefined ? 1 / best.fitness : 0
+  );
 };
 
 /**
@@ -80,9 +80,8 @@ const ga = (): Individual => {
     population = doSelection(population);
 
     if (debug) {
-      //addBestIndividualToGraph(population);
       const best = getBestIndividual(population);
-      prettyPrintIndividual(best);
+      addBestIndividualToGraph(best);
     }
 
     count++;
@@ -91,7 +90,7 @@ const ga = (): Individual => {
   return getBestIndividual(population);
 };
 
-const bestIndividual = hillclimber();
+const bestIndividual = ga();
 
 prettyPrintIndividual(bestIndividual);
 printPlot(bestIndividualsPerPopulation);

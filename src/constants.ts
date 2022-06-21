@@ -1,7 +1,7 @@
 export const jobAmount = 20;
 export const operationAmount = 5;
 
-export const maximumIteration = 300000;
+export const maximumIteration = 10000;
 
 export const populationSize = 100;
 
