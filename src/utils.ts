@@ -6,3 +6,7 @@ export const prettyPrintIndividual = (individual: Individual) => {
 fitness: ${individual.fitness}
 makespan: ${1 / (individual.fitness || Infinity)}`);
 };
+
+export const printPlot = (fitnesses: number[]) => {
+  plotly.plot();
+};

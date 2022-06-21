@@ -1,4 +1,4 @@
-import { maximumIteration, populationSize } from './constants';
+import { debug, maximumIteration, populationSize } from './constants';
 import { Individual } from './interface';
 import { generateSolutionIndividuals } from './operations/generateIndividuals';
 import { doMutation, shiftMutation } from './operations/mutation';
@@ -6,7 +6,9 @@ import { doRating, ratingFunction } from './operations/rating';
 import { doRecombination } from './operations/recombination';
 import { doRepairing } from './operations/reparing';
 import { doSelection } from './operations/selection';
-import { prettyPrintIndividual } from './utils';
+import { prettyPrintIndividual, printPlot } from './utils';
+
+const bestIndividualsPerPopulation: number[] = [];
 
 /**
  * Gets the best individual of the population based on the fitness
@@ -19,6 +21,15 @@ const getBestIndividual = (population: Individual[]): Individual => {
     (a: Individual, b: Individual) =>
       (b.fitness as number) - (a.fitness as number)
   )[0];
+};
+
+/**
+ * Adds the fitness of the best individual to an array for plotting
+ */
+const addBestIndividualToGraph = (population: Individual[]) => {
+  const best: Individual = getBestIndividual(population);
+
+  bestIndividualsPerPopulation.push(best.fitness ?? 0);
 };
 
 /**
@@ -55,15 +66,24 @@ const ga = (): Individual => {
   population = doRating(population);
 
   while (count < maximumIteration) {
-    const selectedIndividuals = doSelection(population);
-
     const childIndividuals = doRecombination(population);
 
     const repairedChildIndividuals = doRepairing(childIndividuals);
 
-    const mutatedChildIndividuals = doMutation(repairedChildIndividuals);
+    const mutatedChildIndividuals = doMutation(population);
 
-    population = doRating([...selectedIndividuals, ...mutatedChildIndividuals]);
+    population = doRating([
+      ...repairedChildIndividuals,
+      ...mutatedChildIndividuals,
+    ]);
+
+    population = doSelection(population);
+
+    if (debug) {
+      //addBestIndividualToGraph(population);
+      const best = getBestIndividual(population);
+      prettyPrintIndividual(best);
+    }
 
     count++;
   }
@@ -71,6 +91,7 @@ const ga = (): Individual => {
   return getBestIndividual(population);
 };
 
-const bestIndividual = ga();
+const bestIndividual = hillclimber();
 
 prettyPrintIndividual(bestIndividual);
+printPlot(bestIndividualsPerPopulation);
