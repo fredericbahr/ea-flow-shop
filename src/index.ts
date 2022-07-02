@@ -4,7 +4,7 @@ import { generateSolutionIndividuals } from "./operations/generateIndividuals";
 import { doMutation, shiftMutation } from "./operations/mutation";
 import { doRating, ratingFunction } from "./operations/rating";
 import { doRecombination } from "./operations/recombination";
-import { doRepairing } from "./operations/reparing";
+import { doRepairing, needsRepairing } from "./operations/reparing";
 import { doSelection } from "./operations/selection";
 import { prettyPrintIndividual, printPlot } from "./utils";
 
@@ -92,5 +92,5 @@ const ga = (): Individual => {
 
 const bestIndividual = ga();
 
-printPlot(bestIndividualsPerPopulation);
 prettyPrintIndividual(bestIndividual);
+printPlot(bestIndividualsPerPopulation);

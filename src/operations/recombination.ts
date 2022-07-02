@@ -1,6 +1,6 @@
-import { random } from 'lodash';
-import { childCreationCount } from '../constants';
-import { Individual } from '../interface';
+import { random } from "lodash";
+import { childCreationCount, jobAmount, operationAmount } from "../constants";
+import { Individual } from "../interface";
 
 /**
  * Handles the recombination of individuals of a populatioon
@@ -21,14 +21,43 @@ export const doRecombination = (population: Individual[]): Individual[] => {
   return children;
 };
 
+const orderRecombination = (a: Individual, b: Individual): Individual => {
+  const newIndividual: Individual = { genotyp: [], fitness: undefined };
+  const crossoverEnd = random(1, a.genotyp.length - 2);
+
+  for (let index = 0; index <= crossoverEnd; index++) {
+    newIndividual.genotyp.push(a.genotyp[index]);
+  }
+
+  const counters = getCountersForOrderRecombination(newIndividual);
+
+  b.genotyp.forEach((gene: number) => {
+    const index = gene - 1;
+
+    if (counters[index] < operationAmount) {
+      newIndividual.genotyp.push(gene);
+      counters[index]++;
+    }
+  });
+
+  return newIndividual;
+};
+
+const getCountersForOrderRecombination = (child: Individual): number[] => {
+  const counters: number[] = Array(jobAmount).fill(0);
+
+  child.genotyp.forEach((gene: number) => counters[gene - 1]++);
+
+  return counters;
+};
 /**
- * A Orderrecombination to recombine two individuals into one child
+ * A one point crossover to recombine two individuals into one child
  *
  * @param {Individual} a the first individual to do a recombine with
  * @param {Individual} b the second individual to do a recombine with
  * @returns {Individual} the emerged indiviudal
  */
-const orderRecombination = (a: Individual, b: Individual): Individual => {
+const onPointCrossover = (a: Individual, b: Individual): Individual => {
   const newIndividual: Individual = { genotyp: [], fitness: undefined };
 
   const crossoverEnd = random(1, a.genotyp.length - 1);

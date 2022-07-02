@@ -1,6 +1,6 @@
-import { cloneDeep, flatten, shuffle } from 'lodash';
-import { jobAmount, operationAmount } from '../constants';
-import { Individual } from '../interface';
+import { cloneDeep, flatten, shuffle } from "lodash";
+import { jobAmount, operationAmount } from "../constants";
+import { Individual } from "../interface";
 
 /**
  * Handles the repairing of a population
