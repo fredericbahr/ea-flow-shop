@@ -57,7 +57,7 @@ const getCountersForOrderRecombination = (child: Individual): number[] => {
  * @param {Individual} b the second individual to do a recombine with
  * @returns {Individual} the emerged indiviudal
  */
-const onPointCrossover = (a: Individual, b: Individual): Individual => {
+const onePointCrossover = (a: Individual, b: Individual): Individual => {
   const newIndividual: Individual = { genotyp: [], fitness: undefined };
 
   const crossoverEnd = random(1, a.genotyp.length - 1);
