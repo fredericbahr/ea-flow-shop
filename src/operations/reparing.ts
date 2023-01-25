@@ -18,8 +18,8 @@ export const doRepairing = (population: Individual[]): Individual[] => {
 /**
  * Repairs the individiual
  *
- * @param {Individual} individiual the individual to repair
- * @returns {Individual} the repaired individual
+ * @param individiual the individual to repair
+ * @returns the repaired individual
  */
 export const repair = (individual: Individual): Individual => {
   const copiedIndividual: Individual = cloneDeep(individual);
@@ -54,8 +54,8 @@ export const repair = (individual: Individual): Individual => {
 /**
  * Gets the missings operations for all jobs
  *
- * @param {number[]} operationCounters the counters of done operations
- * @returns {number[]} an array of missing operations per job, e.g. [1, 1, 2]
+ * @param operationCounters the counters of done operations
+ * @returns an array of missing operations per job, e.g. [1, 1, 2]
  */
 const getMissingJobOperations = (operationCounters: number[]): number[] => {
   const missingJobOperations: number[] = flatten(
@@ -70,9 +70,9 @@ const getMissingJobOperations = (operationCounters: number[]): number[] => {
 /**
  * Gets the missing operations for a job based on the counter of done  operations
  *
- * @param {number} counter the counter of done operations for a job
- * @param {number} job the job number that is missing,
- * @returns {number[]} the missing operations for a job, e.g [2, 2]
+ * @param counter the counter of done operations for a job
+ * @param job the job number that is missing,
+ * @returns the missing operations for a job, e.g [2, 2]
  */
 const getMissingJobOperation = (counter: number, job: number): number[] => {
   const differenceOfTotalOperationsAndJobOperationCount =
@@ -88,8 +88,8 @@ const getMissingJobOperation = (counter: number, job: number): number[] => {
 /**
  * Checks if an individual needs repairaing aka is not valid
  *
- * @param {Individual} individual the individual to check whether it needs to be repaired
- * @return {boolean} true, if individual needs to be repaired
+ * @param individual the individual to check whether it needs to be repaired
+ * @return true, if individual needs to be repaired
  */
 export const needsRepairing = (individual: Individual): boolean => {
   const operationCounters = getOperationCountForJobs(individual);
@@ -101,7 +101,7 @@ export const needsRepairing = (individual: Individual): boolean => {
  * Gets the count of operations form the individual´s genotyp for each job
  *
  * @param individual the indiviual to get the operation count
- * @return {number[]} the operation counts for each job
+ * @return the operation counts for each job
  */
 const getOperationCountForJobs = (individual: Individual): number[] => {
   const counters: number[] = Array(jobAmount).fill(0);

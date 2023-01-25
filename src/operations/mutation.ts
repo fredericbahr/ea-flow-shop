@@ -6,8 +6,8 @@ import { Individual } from '../interface';
  * Handles the mutation of a population
  * Only mutates some individuals of the population
  *
- * @param {Individual[]} populaiton the population to mutate
- * @returns {Individual[]} the population with mutated individuals
+ * @param populaiton the population to mutate
+ * @returns the population with mutated individuals
  */
 export const doMutation = (population: Individual[]): Individual[] => {
   return population.map((individual: Individual) => {
@@ -24,7 +24,7 @@ export const doMutation = (population: Individual[]): Individual[] => {
 /**
  * Mutates the individual through shifting a random proportion of
  *
- * @param {Individual} individual the individual to mutate
+ * @param individual the individual to mutate
  * @returns a new mutated individual
  */
 export const shiftMutation = (individual: Individual): Individual => {

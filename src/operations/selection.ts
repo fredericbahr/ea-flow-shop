@@ -8,7 +8,7 @@ import { Individual } from '../interface';
  * @param population the population to select from
  * @returns the selected individuals of a population
  */
-export const doSelection = (population: Individual[]) => {
+export const doSelection = (population: Individual[]): Individual[] => {
   const selection = tournamentSelection(population, populationSize);
 
   return selection;
@@ -66,6 +66,13 @@ const bestSelection = (
     .slice(0, count);
 };
 
+/**
+ * A tournement selection of a population
+ * 
+ * @param population the population to select from
+ * @param count the amount of individuals to select
+ * @returns the x best individuals of the population
+ */
 const tournamentSelection = (
   population: Individual[],
   count: number

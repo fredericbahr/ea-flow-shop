@@ -21,6 +21,12 @@ export const doRecombination = (population: Individual[]): Individual[] => {
   return children;
 };
 
+/**
+ * A order recombination to recombine two individuals into one child
+ * @param a the first individual to do a recombine with
+ * @param b the second individual to do a recombine with
+ * @returns the emerged indiviudal
+ */
 const orderRecombination = (a: Individual, b: Individual): Individual => {
   const newIndividual: Individual = { genotyp: [], fitness: undefined };
   const crossoverEnd = random(1, a.genotyp.length - 2);
@@ -43,6 +49,11 @@ const orderRecombination = (a: Individual, b: Individual): Individual => {
   return newIndividual;
 };
 
+/**
+ * Gets the counters for a the order recombination of an individual
+ * @param child the child indiviual that was created
+ * @returns the counters for the individual
+ */
 const getCountersForOrderRecombination = (child: Individual): number[] => {
   const counters: number[] = Array(jobAmount).fill(0);
 
@@ -50,12 +61,13 @@ const getCountersForOrderRecombination = (child: Individual): number[] => {
 
   return counters;
 };
+
 /**
  * A one point crossover to recombine two individuals into one child
  *
- * @param {Individual} a the first individual to do a recombine with
- * @param {Individual} b the second individual to do a recombine with
- * @returns {Individual} the emerged indiviudal
+ * @param a the first individual to do a recombine with
+ * @param b the second individual to do a recombine with
+ * @returns the emerged indiviudal
  */
 const onePointCrossover = (a: Individual, b: Individual): Individual => {
   const newIndividual: Individual = { genotyp: [], fitness: undefined };

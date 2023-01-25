@@ -14,7 +14,7 @@ const bestIndividualsPerPopulation: number[] = [];
  * Gets the best individual of the population based on the fitness
  *
  * @param population the population to get the best from
- * @returns {Individual} the best individual of the population
+ * @returns the best individual of the population
  */
 const getBestIndividual = (population: Individual[]): Individual => {
   return population.sort(
@@ -59,6 +59,12 @@ const hillclimber = (): Individual => {
   return bestIndividual;
 };
 
+/**
+ * Genetic algorithm
+ * Trys to optimizes the given flow shop problem 
+ * 
+ * @returns the best found individual (solution) for the problem
+ */
 const ga = (): Individual => {
   let count = 0;
   let population: Individual[] = generateSolutionIndividuals(populationSize);

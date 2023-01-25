@@ -1,3 +1,4 @@
+/** processing times of a flow shop problem */
 export const processingTimes: number[][] = [
   [54, 79, 16, 66, 58],
   [83, 3, 89, 58, 56],

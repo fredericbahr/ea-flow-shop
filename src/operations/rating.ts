@@ -20,7 +20,7 @@ export const doRating = (population: Individual[]): Individual[] => {
  * Rates a genotype with a fitness
  * Calculates the makespan of a schedule
  *
- * @param {number[]} genotyp the genotyp of an individual to rate
+ * @param genotyp the genotyp of an individual to rate
  * @returns the fitness of an individual
  */
 export const ratingFunction = (genotyp: number[]): number => {
@@ -56,6 +56,11 @@ export const ratingFunction = (genotyp: number[]): number => {
  * calculates the processing time for an operation
  * If counter === 0 then get the end processing time of previous operations for first maschine and add the processing time for the jobs operation
  * If counter !== 0 get the maximum of the end processing time of previous operation for the maschine and the end processing time of the jobs previous operation and add the processing time for the jobs operation
+ * 
+ * @param maschinesPlan the plan of machines
+ * @param counters the counters for each job
+ * @param index the index of an operation
+ * @returns the processing time of the operation
  */
 export const calculateProcessingTimeForOperation = (
   maschinesPlan: number[][],
